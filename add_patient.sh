@@ -17,8 +17,8 @@ then
     echo "Enter the patient information:"
     read -p "Name: " Name
     read -p "ID: " ID
-    read -p "Admission Date (D/M/YYYY): " Admission
-    read -p "Discharge Date (D/M/YYYY): " Discharge
+    read -p "Admission Date (M/D/YYYY): " Admission
+    read -p "Discharge Date (M/D/YYYY): " Discharge
     read -p "Disease: " Disease
     read -p "Doctor: " Doctor
 
