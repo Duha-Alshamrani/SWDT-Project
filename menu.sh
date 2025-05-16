@@ -1,15 +1,15 @@
 #!/bin/bash
 # Step 1: Input dataset
-#check if the file name passed
+#check if the file name passed as argument
 if [ $# -lt 1 ]; then
     echo "Enter the file name as argument"
     exit 1
 fi
 dataset=$1
 
-echo "============================"
+echo "==========================="
 echo " Patient Data Processor"
-echo "============================"
+echo "==========================="
 
 if [[ ! -f "$dataset" ]]; then
   echo "Error: File not found. Exiting."
