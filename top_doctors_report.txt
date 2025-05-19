@@ -1,0 +1,8 @@
+  Top 5 Doctors Report
+ =======================
+ Num_patients, Doctor_name
+ 8           , Dr. Mona
+ 6           , Dr. Nada
+ 4           , Dr. Khalid
+ 3           , Dr. Tarek
+ 1           , Dr. Fahd
