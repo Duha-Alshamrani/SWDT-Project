@@ -1,68 +1,67 @@
 #!/bin/bash
-# Step 1: Input dataset
-#check if the file name passed as argument
+
+# Check if file argument is passed
 if [ $# -lt 1 ]; then
-    echo "Enter the file name as argument"
-    exit 1
-fi
-dataset=$1
-
-echo "==========================="
-echo " Patient Data Processor"
-echo "==========================="
-
-if [[ ! -f "$dataset" ]]; then
-  echo "Error: File not found. Exiting."
+  echo "❌ Error: Please provide the data file name as an argument."
   exit 1
 fi
 
-# Step 2: Validate Columns
-echo "[Step 2] Validating columns..."
-./check_columns.sh "$dataset"
-if [[ $? -ne 0 ]]; then
+data=$1
 
-  echo "Validation failed. Exiting."
-  exit 1
-fi
+# Welcome message at the start
+clear
+echo "==================================================="
+echo "🏥 Welcome to the Hospital Data Management System"
+echo "==================================================="
+echo ""
 
-# Step 3: Clean Data
-echo "[Step 3] Cleaning data..."
-./cleaning_data.sh "$dataset"
+# ✅ Step 1: Validate required columns
+echo "🔎 Checking required columns in the file..."
+./check_columns.sh "$data"
 
-# Step 4: Add New Patients?
+echo "✅ Done Checking the required columns"
+
+# 🧼 Step 2: Clean the data
+echo "🧽 Cleaning patient data..."
+./cleaning_data.sh "$data"
+echo "✅ Data cleaned and saved to cleand_patients.csv"
+
+
+# ➕ Step 3: Add New Patients?
+echo "➕ Add new patient..."
   ./add_patient.sh "cleand_patients.csv"
 
 
-# Step 5: Menu for data processing
-while true; do
+# ▶️ Start interactive menu
+ while true; do
   echo ""
-  echo "======== Data Processing Menu ========"
-  echo "1) Calculate Stay Duration"
-  echo "2) Group by Disease"
-  echo "3) Analyze Visits"
-  echo "0) Exit"
-  echo "======================================"
-  read -p "Choose an option [0-3]: " option
+  echo "=================================="
+  echo "🏥 Interactive Menu "
+  echo "=================================="
+  echo "1) 🧬 Group patients by disease"
+  echo "2) 🔄 Analyze patient visits"
+  echo "3) 📅 Calculate stay duration"
+  echo "4) 👨‍⚕️ View top 5 doctors"
+  echo "0) ❌ Exit"
+  echo "=================================="
+
+  read -p "Choose an option [0-4]: " option
 
   case $option in
     1)
-      ./stay_duration.sh "cleand_patients.csv"
-      echo "The stay durations has been calculated in file, you can see it in your files" 
-      ;;
-    2)
-      ./group_by_disease.sh "cleand_patients.csv"
-      ;;
-    3)
-      ./analyze_visits.sh "cleand_patients.csv"
-      ;;
+     	./group_by_disease.sh "cleand_patients.csv" ;;
+    2) 
+    	./analyze_visits.sh "cleand_patients.csv" ;; 
+    3) 
+    	./stay_duration.sh "cleand_patients.csv" 
+    	echo "The stay durations has been calculated in file, you can see it in your files ✔" ;;
+    4) 
+    	./report.sh "cleand_patients.csv" ;;
     0)
-      echo "Done."
-      break
-      ;;
-    *)
-      echo "Invalid choice. Try again."
-      ;;
+     	echo "✔ Done! Thank you for using the Hospital Data Management System"
+        break ;;
+    *) 
+    	echo "❌ Invalid choice. Try again." ;;
   esac
+
 done
-# Step 6: Generate Top Doctors Report 
-./report.sh "cleand_patients.csv"
